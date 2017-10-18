@@ -1,0 +1,41 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>P3-CSS#1</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <my-component></my-component>
+        <hr>
+        <my-component></my-component>
+    </div>
+    <script>
+        // create Vue component - extend the Vue instance
+        // new instance with extra features
+        Vue.component('my-component', {
+            data: function () { //data เป็น function ส่วนใหญ่เขียนแบบนี้จะดีกว่า แต่ถ้ากำหนดเป็น var ข้างนอก ก็จะเป็น ดาต้าแบบ Global 
+                return {
+                    status: 'Critical'
+                }
+            },             
+            template: '<p>Server Status: {{ status }} (<button @click="changeStatus">Change</button>)</p>',
+            methods: {
+                changeStatus: function () {
+                    if (this.status != 'Normal')
+                        this.status = 'Normal';
+                    else
+                        this.status = 'Critical';
+                }
+            }
+        });
+
+        new Vue({
+            el: '#app'
+        })
+    </script>
+</body>
+
+</html>

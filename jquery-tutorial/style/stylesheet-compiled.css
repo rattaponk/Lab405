@@ -1,0 +1,38 @@
+@font-face {
+  font-family: 'TH Sarabun New';
+  src: url("fonts/THSarabunNew.ttf") format("truetype"); }
+html {
+  font-size: 10px; }
+
+body {
+  font-family: 'TH Sarabun New', sans-serif !important;
+  font-size: 3rem; }
+
+body.login {
+  background-color: #CD5C5C; }
+
+.container.container-login {
+  max-width: 420px;
+  margin-top: 18vh; }
+  .container.container-login .form-group:last-child {
+    text-align: center; }
+  .container.container-login .block-img-login {
+    max-width: 200px;
+    margin: auto;
+    margin-bottom: 20px;
+    text-align: center; }
+    .container.container-login .block-img-login img {
+      width: 100%;
+      -webkit-border-radius: 100px 100px 100px 100px;
+      border-radius: 100px 100px 100px 100px;
+      -webkit-box-shadow: 1px 1px 10px 3px #9179D4;
+      box-shadow: 1px 1px 10px 3px #9179D4; }
+  .container.container-login input[type="checkbox"] {
+    cursor: pointer; }
+  .container.container-login button[type="submit"], .container.container-login button[type="reset"] {
+    cursor: pointer; }
+
+.container-form {
+  margin-top: 10vh; }
+
+/*# sourceMappingURL=stylesheet-compiled.css.map */

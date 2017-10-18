@@ -1,0 +1,108 @@
+# index.html
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>JSON Crash course</title>
+	</head>
+	<body>
+		<script>
+		
+		</script>
+		
+	</body>
+</html>
+
+# JavaScript object, not valid JSON
+var person = {
+    name: "Brad",
+    age: 35,
+    email: function() {
+        return 'hello@gmail.com';
+    },
+    address: {
+        street: "239 Huaykaew st.",
+        city: "Chiang Mai"
+    },
+    friends: ["Yutha", "Kano", "Santa"]
+}
+
+console.log(person.name)
+console.log(person.address.street);
+console.log(person.friends[1]);
+
+# create valid JSON from JavaScript object
+person_json = JSON.stringify(person);
+console.log(person_json.name);   # this gives 'undefined' error
+
+# parsing JSON into a JavaScript object
+person1 = JSON.parse(person_json);
+console.log(person1.name);
+
+# Array of JavaScript Objects
+var people = [
+    {
+        name: "Dome",
+        age: 35
+    },
+    {
+        name: "John",
+        age: 40
+    },
+    {
+        name: "Sara",
+        age: 25
+    }
+];
+
+console.log(people[1].age);
+
+# Add HTML tags to display data
+<ul id="people">
+
+</ul>
+
+# display data in HTML
+
+var output = '';
+for (var i=0; i<people.length; i++) {
+    console.log(people[i]);
+    output += '<li>'+people[i].name+'</li>';
+}
+document.getElementById('people').innerHTML = output;
+
+
+
+# AJAX: XMLHttpRequest Object
+
+// making http request using javascript
+// sending and receiving data after the page is loaded
+var xhttp = new XMLHttpRequest();
+
+// execute every time the status of the object changes
+xhttp.onreadystatechange = function() {
+    // readyState 4 = the respond has been captured
+    // status 200 = HTTP status OK
+    if (this.readyState == 4 && this.status == 200) {
+        console.log(xhttp.responseText);
+        var response = JSON.parse(xhttp.responseText);
+        var people = response.people;
+
+        var output = '';
+        for (var i=0; i<people.length; i++) {
+            console.log(people[i]);
+            output += '<li>'+people[i].name+'</li>';
+        }
+        document.getElementById('people').innerHTML = output;
+    }
+};
+
+// making a request to a specific file or URL
+xhttp.open("GET", "people.json", true);
+xhttp.send();
+
+# Node.json - install live-server model globally
+npm install -g live-server
+
+# start live-server in the project folder
+liver-server

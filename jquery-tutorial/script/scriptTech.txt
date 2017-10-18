@@ -1,0 +1,189 @@
+https://medium.com/javascript-scene/how-to-use-es6-for-isomorphic-javascript-apps-2a9c3abe5ea2
+
+https://www.babelcoder.com/blog/posts/introduction-to-es2015
+https://www.babelcoder.com/blog/posts/avoid-callback-hell-using-promise-async-await
+// IMPORT / EXPORT
+
+  // lib/math.js
+  export function sum(x, y) {
+    return x + y;
+  }
+  export var pi = 3.141593;
+
+  // script.js
+  import * as math from "lib/math";
+  alert("2π = " + math.sum(math.pi, math.pi));
+
+// IMPORT / EXPORT
+
+// DESTRUCTURING
+
+  let person = {
+    age: 24,
+    gender: 'male',
+    name: {
+      firstName: 'firstName',
+      lastName: 'lastName'
+    }
+  }
+
+  // ถ้าเราต้องการค่าเหล่านี้ออกจาก Object ต้องมาประกาศตัวแปรแบบนี้
+  let age = person.age
+  let gender = person.gender
+  let name = person.name
+  let firstName = name.firstName
+  let lastName = name.lastName
+
+  // หากใช้ Destructuring จะเหลือแค่นี้
+  let { age, gender, name } = person
+  let { firstName, lastName } = name
+
+  // แต่ในความเป็นจริง name เป็นเพียงทางผ่าน เราต้องการแค่ firstName และ lastName
+  // จึงใช้ Destructuring ซ้อนเข้าไป
+  let { age, gender, name: { firstName, lastName } } = person
+
+// DESTRUCTURING
+
+// SPREAD
+
+  let obj1 = { a: 1, b: 2 }
+  let obj2 = { c: 3, d: 4 }
+  console.log({ ...obj1, ...obj2 }) // {"a":1,"b":2,"c":3,"d":4}
+
+  let arr1 = [1, 2, 3]
+  let arr2 = [4, 5, 6]
+  console.log([...arr1, ...arr2]) // [1,2,3,4,5,6]
+
+// SPREAD
+
+// ARROW FUNCTION
+
+// ES5
+function(arguments) {
+
+}
+
+// ES2015
+(arguments) => {
+
+}
+
+//////////
+
+ื new Dog()
+
+  function Dog() {
+    this.color = 'white'
+
+    setTimeout(function(){
+      // this ตัวนี้หมายถึง this ใน context ของฟังก์ชั่นนี้
+      console.log(this.color)
+    }, 100)
+  }
+
+  // ถ้าต้องการให้พิมพ์ color ออกมา
+  function Dog(){
+    this.color = 'white'
+    let self = this
+
+    setTimeout(function(){
+      console.log(self.color)
+    }, 100)
+  }
+
+  // Arrows function
+  function Dog() {
+    this.color = 'white'
+
+    setTimeout(() => {
+      console.log(this.color);
+    }, 100)
+  }
+
+  //////////
+
+  // กรณีของ Arrow Function ถ้าตัว body ของฟังก์ชันไม่ครอบด้วย {} และมี statement เดียว จะถือว่าค่านั้นคือค่าที่ return ออกจากฟังก์ชัน
+  const fn = () => 3
+
+  console.log(fn()) // 3
+
+  //นอกจากนี้เราสามารถละ () ได้ถ้าพารามิเตอร์นั้นมีเพียงตัวเดียว
+  const arr = [1, 2, 3]
+  // มีค่าเท่ากับ arr.map((x) => x * x)
+  arr.map(x => x * x)
+
+// ARROW FUNCTION
+
+// DEFAULE VALUES
+
+  function foo(gender){
+    gender = gender || 'male';
+  }
+
+  function foo(gender = 'male'){
+
+  }
+
+// DEFAULE VALUE
+
+// Named Parameters
+
+  function request(options) {
+    var method = options.method || 'GET'
+    var ssl = options.ssl || false
+    console.log(method);
+  }
+
+  function request({ method='GET', ssl=false }){
+    console.log(method)
+  }
+
+// Named Parameters
+
+// Rest Parameters
+
+  // ไม่ว่าจะส่งตัวเลขเข้ามากี่ตัว ตัวแรกจะเป็น initial
+  // ตัวอื่นจะเก็บในอาเรย์ชื่อ rest
+  function sum(initial, ...rest){
+    return rest.reduce((prev, cur) => prev + cur, initial)
+  }
+
+  console.log(sum(10, 1, 2, 3)) //16
+
+// Rest Parameters
+
+// ลดความซ้ำซ้อน
+
+  // ES5
+  const obj = {
+    foo: function() {
+
+    }
+  }
+
+  // ES2015
+  const obj = {
+    foo() {
+
+    }
+  }
+
+  // ES5
+  const foo = 'foo'
+  const bar = 'bar'
+
+  const obj = {
+    foo: foo,
+    bar: bar
+  }
+
+  // ES2015
+  const foo = 'foo'
+  const bar = 'bar'
+
+  const obj = {
+    foo,
+    bar
+  }
+
+// ลดความซ้ำซ้อน

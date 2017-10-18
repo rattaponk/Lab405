@@ -1,0 +1,64 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>P3-CSS#1</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app1">
+        <h1>{{ title }}</h1>
+        <button v-on:click="show">Show Paragraph</button>
+        <p v-if="showParagraph">This is not always visible</p>
+    </div>
+    <script>
+        var vm1 = new Vue({
+            el: '#app1',
+            data: {
+                title: 'The VueJS Instance',
+                showParagraph: false
+            },
+            methods: {
+                show: function () {
+                    this.showParagraph = true;
+                    this.updateTitle('The Update VueJS Instance');
+                },
+                updateTitle: function (title) {
+                    this.title = title;
+                }
+            },
+            computed: {
+                lowercaseTitle: function () {
+                    return this.title.toLowerCase();
+                }
+            },
+            watch: {
+                title: function (value) {
+                    alert('Title changed, new value: ' + value);
+                }
+            }
+        });
+
+        // Access from Pure javascript
+        setTimeout(function () {
+            vm1.title = 'Changed by Timer';
+        })
+
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                title: 'The Second VueJS Instance',
+                showParagraph: false
+            },
+            methods: {
+                onChange: function () {
+                    // Access from VM2
+                    vm1.title = 'Title Changed by VM2';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<script src="https://unpkg.com/vue/dist/vue.js"></script>
+	<title>P4-Rendering</title>
+</head>
+
+<body>
+	<div id="app">
+		<div style="background-color:aliceblue">
+			<button v-on:click="show=!show">Switch</button>
+			<p v-if="show">You can see me!</p>
+			<p v-else>Now you see me again!!</p>
+			<p v-show="show">Show</p>
+			<p>Do you also see me?</p>
+		</div>
+		<div style="background-color:#FFF0F9">
+			<h1>Ingredients List</h1>
+			<ul>
+				<li v-for="ingredient in ingredients">{{ingredient}}</li>
+
+			</ul>
+
+		</div>
+		<div style="background-color:#FFE9B1">
+			<h1>Ingredients List and Index</h1>
+			<ul>
+				<li v-for="(ingredient,index) in ingredients">{{index}} : {{ingredient}} </li>
+
+			</ul>
+		</div>
+		<div style="background-color:#FFCEC7">
+				<h1>Ingredients List and Index</h1>
+				<ul>
+					<li v-for="person in persons"> {{person.name}} {{person.age}}</li>
+	
+				</ul>
+		</div>
+		<div style="background-color:#D1FFEC">
+				<h1>Person List and Key and Index</h1>
+				<ul>
+					<li v-for="person in persons">
+						<div v-for="(value,key,index) in person">
+							{{index}} : {{key}} : {{value}} 
+						</div>
+					</li>
+	
+				</ul>
+		</div> 
+		<div style="background-color:#DAD1FF">
+				<h1>count by v-for</h1>
+				 
+						<span v-for="n in 20"> {{n}}</span>
+					 
+		</div> 
+	</div>
+
+	<script>
+		new Vue({
+			el: '#app',
+			data: {
+				show: false,
+				ingredients: ['meat', 'fruit', 'cookies'],
+				persons: [
+					{ name: 'max', age: 27, color: 'red' },
+					{ name: 'anna', age: 'unknow', color: 'blue' }
+				]
+			}
+		})
+	</script>
+</body>
+
+</html>

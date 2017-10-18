@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+    
+    <title>P2-Events</title>
+</head>
+<body>
+    <div id="app">
+        <button v-on:click="increase(3)">Click</button>
+        <p>{{ counter }}</p>
+        <p>{{ counter*100 }}</p>
+        <p>{{ counter>30? 'more than 30':'less than 30' }}</p>
+        <p v-on:mousemove="updateCoords">
+            Coordinate:({{x}} , {{y}})
+            - <span v-on:mousemove="dummy">DEAD SPOT </span>
+            - <span v-on:mousemove.stop>Test Dead</span>
+        </p>
+        <!-- one way blinding เปลี่ยนค่าตาม value แต่ถ้าแก้ค่าใน box แล้วค่า value ไม่เปลี่ยน -->
+        <p>One way (v-bind) : <input type="text" v-bind:value="counter"></p> 
+        <!-- two way blinding เปลี่ยนค่าตาม value และถ้าแก้ค่าใน box แล้วค่า value เปลี่ยน -->
+        <p>Two way (v-model) : <input type="text" v-model:value="counter"></p>  
+
+        <p><input type="text" v-on:keyup.enter.space="alertMe"></p>
+    </div>
+
+    <script>
+        new Vue ({
+            el: '#app',
+            data: {
+                counter: 0,
+                x:0,
+                y:0
+            },
+            methods:{
+                increase:function(step)
+                {
+                    this.counter+=step;
+                },
+                updateCoords: function(event)
+                {
+                    this.x=event.clientX;
+                    this.y=event.clientY;
+                },
+                dummy: function(event)
+                {
+                    event.stopPropagation();    
+                },
+                alertMe: function()
+                {
+                    alert('Alert input!!! ' + event.keyCode);
+                }
+            }          
+        });
+    </script>
+    
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+        <title>P2-Computed Properties</title>
+        <script src="https://unpkg.com/vue/dist/vue.js"></script>        
+	</head>
+	<body>
+        
+        
+        <div id="app">
+            <!-- <button v-on:click="increase">Increase</button>
+            <button v-on:click="decrease">Decrease</button> -->
+
+            <button v-on:click="counter++">Increase</button>
+            <button v-on:click="counter--">Decrease</button>  
+
+            <!-- changing 'counter2' will update and re-execute result() -->
+            <button v-on:click="counter2++">Increase2</button>
+
+            <p>Counter: {{ counter }} | {{counter2}} </p>
+            <p>Result: {{ result() }} | {{output}} </p>
+            
+        </div>
+
+        <script>
+            new Vue ({
+	            el: '#app',
+                data: {
+                    counter: 0,
+                    counter2: 0,
+                    // result: ''  // can be updated in many places!!!
+                    // result: this.counter > 5 ? '> 5':'< 5';  // CANNOT do this!
+                },
+                //ฉลาดกว่า Method จะเลือกทำเมื่อดาต้าที่เกี่ยวข้องกับ function มีการเปลี่ยนแปลง
+                computed: {
+                    // output awares that it does NOT care about 'counter2'
+                    // gets called only when 'counter' is changed
+                    output: function() {    // used just like data properties
+                        console.log('computed');
+                        return this.counter > 5 ? '> 5':'< 5';
+                    }
+                },
+                //เป็นการทำงานแบบรอกัน
+                watch:{
+                    counter: function(value){
+                        var v= this;
+                        setTimeout(function()
+                        {
+                            v.counter=0;
+                        },4000);
+                    }
+                },
+                methods: {
+                    increase: function() {
+                        this.counter++;
+                        // this.result = this.counter > 5 ? '> 5':'< 5';
+                    },
+                    decrease: function() {
+                        this.counter--;
+                        // this.result = this.counter > 5 ? '> 5':'< 5';
+                    },
+                    // gets called everytime one of the data properties changed
+                    result: function() {    
+                        console.log('method');
+                        return this.counter > 5 ? '> 5':'< 5';
+                    }
+                }
+
+            });
+        </script>
+	</body>
+</html>
+
+

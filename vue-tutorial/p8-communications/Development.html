@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!-- saved from url=(0025)http://10.80.123.98:8090/ -->
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Instant Markdown</title>
+  <style>
+      .markdown-body {
+          box-sizing: border-box;
+          min-width: 200px;
+          max-width: 980px;
+          margin: 0 auto;
+          padding: 45px;
+      }
+    </style>
+<link rel="stylesheet" href="./Development_files/github-markdown.css">
+<link rel="stylesheet" href="./Development_files/github-highlight.css">
+<script src="./Development_files/socket.io.js.download"></script>
+<script>
+      var socket = io();
+      socket.on('markdown', function (msg) {
+        document.getElementById("markdown").innerHTML = msg;
+        var cursor = document.getElementById("instant-markdown-cursor");
+        if (cursor) {
+          cursor.scrollIntoView();
+        }
+      });
+      socket.on('disconnect', function() {
+        window.close();
+      })
+    </script>
+</head>
+
+<body>
+  <article id="markdown" class="markdown-body"><h1 id="development-workflow-with-webpack-and-vue-cli">Development workflow with Webpack and Vue CLI</h1>
+<h3 id="development-server">Development Server</h3>
+<ul>
+<li>Vue runs on the Client</li>
+<li>the App will be served by a server</li>
+<li>file:// protocol is not the http:// protocol</li>
+<li>test your App under realistic circumstances</li>
+</ul>
+<h3 id="development-workflow">Development Workflow</h3>
+<ul>
+<li>code -&gt; apply "special features" -&gt; production server</li>
+<li>special features:
+<ul>
+<li>compile 'single file template' (don't use "template"!)</li>
+<li>case-insensitive component selectors</li>
+<li>preprocessors and more</li>
+</ul>
+</li>
+</ul>
+<h3 id="using-vue-cli-to-create-projects">Using Vue CLI to create projects</h3>
+<ul>
+<li>Vue CLI help fetching Vue project template</li>
+<li>install Vue CLI using the command: <strong>npm install -g vue-cli</strong></li>
+<li>choose from different available template:
+<ul>
+<li>Simple: <strong>index.html + Vue CDN import</strong></li>
+<li>webpack-simple: basic Webpack workflow</li>
+<li>webpack: complex Webpack workflow (incl. testing)</li>
+<li>browserify / browserify-simple: browserify workflows</li>
+</ul>
+</li>
+</ul>
+<h3 id="installing-the-vue-cli-and-creating-a-new-project">Installing the Vue CLI and creating a new project</h3>
+<ul>
+<li>https://github.com/vuejs/vue-cli</li>
+</ul>
+<pre><code>vue init &lt;template-name&gt; &lt;project-name&gt;
+
+vue init webpack my-project
+
+cd my-project
+
+npm install
+
+npm run dev
+</code></pre>
+<h3 id="webpack-template-folder-structure">Webpack Template folder Structure</h3>
+<ul>
+<li><em>src</em> is the most important</li>
+<li><em>.babelrc</em>: for writing ES6 and translate to ES5</li>
+<li><em>index.html</em>: template</li>
+</ul>
+<h3 id="understanding-vue-files">Understanding ".vue" Files</h3>
+<ul>
+<li><em>render</em> property specify a compiled vue template</li>
+<li>the following code loads 'App.vue' file, another Vue app</li>
+</ul>
+<pre><code>\\ main.js file
+import Vue from 'vue'
+import App from './App.vue'
+
+new Vue( {
+  el: '#app',
+  render: h =&gt; h(App)   // ES6 arrow function
+ } )
+</code></pre>
+<pre><code>// App.vue file - Single File Template
+
+// HTML template, can have vue interpolation and ...
+&lt;template&gt;
+  &lt;h1&gt; Hello World! &lt;h1&gt;
+&lt;/template&gt;
+
+// behave like a Vue instance : new Vue( { } )
+&lt;script&gt;
+  export default {
+  }
+&lt;/script&gt;
+
+// CSS style
+&lt;style&gt;
+
+&lt;/style&gt;
+</code></pre>
+<h3 id="how-to-build-your-app-for-production">How to build your App for production</h3>
+<ul>
+<li>build for production with the command: <strong>npm run build</strong>*</li>
+<li><em>dist</em> folder: stores your bundled and optimization (minify)</li>
+</ul>
+<h3 id="more-about-vue-files-and-the-cli">More about '.vue' files and the CLI</h3>
+<ul>
+<li>more on ".vue" file
+<ul>
+<li>http://vuejs.org/guide/single-file-components.html</li>
+</ul>
+</li>
+<li>more on "render()"
+<ul>
+<li>http://vuejs.org/guide/render-function.html</li>
+</ul>
+</li>
+</ul>
+<h3 id="debugging-vuejs-project">Debugging VueJs Project</h3>
+<p>When working with a Project created by the CLI (using Webpack), you can asily debug your running App by opening your <strong>Developer Tools</strong> and going to "Sources" tab.</p>
+<ul>
+<li>Developer Tools in Chrome</li>
+<li>Vue Developer Tools (https://github.com/vuejs/vue-devtools)</li>
+</ul>
+</article>
+
+
+</body></html>

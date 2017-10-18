@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>JSON Crash course</title>
+</head>
+
+<body>
+    <h1> JavaScript </h1>
+    <h4 id="name"></h4>
+    <ul id="contact"></ul>
+    <h1> XMLHttpRequest </h1>
+    <ul id="people"></ul>
+    <script>
+        console.log("hello world");
+        var person = {
+            name: "Kornkamon",
+            age: 22,
+            address: {
+                street: "294 buddhabucha ",
+                city: "Phitsanulok"
+            },
+            contact: ["Mom", "Pim", "Am"]
+        }
+
+        document.getElementById('name').innerHTML = person.name
+
+        // console.log(person.name);
+        // console.log(person.address.street);
+
+        var contact = ''
+        for (var i = 0; i < person.contact.length; i++) {
+            // console.log(person.contact[i])
+            contact += "<li>" + person.contact[i] + "</li>"
+        }
+        document.getElementById('contact').innerHTML = contact;
+
+        var valid_person = JSON.stringify(person);
+        console.log(valid_person);
+        var json2ob_person = JSON.parse(valid_person); //jason string ต้องเปลี่ยนเป็น object ก่อน ถึงจะใช้ได้
+        console.log(valid_person.name);  //out: undefined
+        console.log(json2ob_person.name)  //out: Kornkamon
+
+        //ทำงานแบบ concurrent
+        var xhttp = new XMLHttpRequest();
+
+        // execute every time the status of the object changes
+
+        xhttp.onreadystatechange = function () {
+            // readyState 4 = the respond has been captured
+            // status 200 = HTTP status OK
+            if (this.readyState == 4 && this.status == 200) {
+                console.log(xhttp.responseText);//เรียกเป็น responseText เป็น json string
+                var response = JSON.parse(xhttp.responseText);
+                var people = response.people;
+
+                var output = '';
+                for (var i = 0; i < people.length; i++) {
+                    console.log(people[i]);
+                    output += '<li>' + people[i].name + '</li>';
+                }
+                document.getElementById('people').innerHTML = output;
+            }
+        };
+
+        // making a request to a specific file or URL
+        xhttp.open("GET", "people.json", true); //เปิดไฟล์ people.json
+        xhttp.send();
+    </script>
+</body>
+
+</html>

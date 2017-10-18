@@ -1,0 +1,159 @@
+# install MongoDB service for Windows
+mongod --directoryperdb --dbpath d:\mongodo\data\db --logpath d:\mongodb\log\mongo.log --logappend --rest --install
+
+# create a Windows Service for MongoDB
+sc.exe create MongoDB binPath= "\"d:\mongodb\bin\mongod.exe\" --service --config=\"d:\mongodb\mongod.cfg\"" DisplayName= "MongoDB" start= "auto"
+
+# delete a Windows Service
+sc.exe delete MongoDB
+
+# start MongoDB server on Mac or Linux
+./mongod --directoryperdb --dbpath ~/mongodb/data/db/ --logpath ~/mongodb/log/mongo.log --logappend --rest
+
+# start Mongo Shell
+mongo
+
+# create and use database 
+use <db_name>
+
+# what is the current database
+db
+
+
+# create an admin user
+db.createUser({
+	user: "dome",
+	pwd: "1234",
+	roles: ["readWrite", "dbAdmin"]
+});
+
+# list all collections
+show collections
+
+# create a collection
+db.createCollection('customers');
+
+# insert a document into a collection
+db.customers.insert({first_name:"Brad", last_name:"Doe"});
+db.customers.insert({
+	first_name: "John",
+	last_name: "Doe"
+});
+db.customers.insert([
+	{first_name: "Steven",last_name: "Smith" },
+	{first_name:"Nancy",last_name:"Smith",gender="female"}
+]);
+
+# find 
+db.customers.find();
+db.customers.find().pretty();
+db.customers.find({first_name:"Sharon"});
+
+# find with '$or' operator
+db.customers.find({$or:[{first_name:"Sharon"}, {first_name:"Troy"}]});
+
+# find everyone under the age of 40
+db.customers.find({age:{$lt:40}});
+
+# find everyone living in the city of "Boston:
+db.customers.find({"address.city":"Boston"});
+
+# query the memberships of "mem1"
+db.customers.find({memberships:"mem1"});
+
+# sorting by last_name in ascending order
+db.customers.find().sort({last_name:1}).pretty();
+
+# sorting by last_name in descending order
+db.customers.find().sort({last_name:-1}).pretty();
+
+# couting documents
+db.customers.find().count();
+db.customers.find({gender:"male"}).count();
+
+# set limit
+db.customers.find().limit(4);
+db.customers.find().limit(4).sort({last_name:1});
+
+# iteration and print "first_name" of all documents
+db.customers.find().forEach(function(doc) {print("Customer Name: " + doc.first_name)});
+
+
+
+# update
+db.customers.update({first_name:"John"}, {first_name:"John", last_name:"Doe", gender:"male"});
+
+# update use '$set:' operator
+db.customers.update({first_name:"Steven"}, {$set:{gender:"male"}});
+db.customers.update({first_name:"Steven"}, {$set:{age:45}});
+
+# update use '$inc' operator to increment numeric value
+db.customers.update({first_name:"Steven"}, {$inc:{age:5}});
+
+# update use '$unset' operator to delete a field
+db.customers.update({first_name:"Steven"},{$unset:{age:1}});
+
+# update a non-existing document ==> no change in DB
+db.customers.update({first_name:"Mary"}, {first_name:"Mary", last_name:"Samson"});
+
+# upsert a new document if not there!!!
+# using '{upsert: true}'
+db.customers.update({first_name:"Mary"}, {first_name:"Mary", last_name:"Samson"}, {upsert: true});
+
+# update field's name (from gender to sex)
+db.customers.update({first_name:"Steven"}, {$rename:{"gender":"sex"}});
+
+
+
+# delete all documents with first_name: "Steven"
+db.customers.remove({first_name:"Steven"});
+
+# delete the first document with first_name: "Steven"
+db.customers.remove({first_name:"Steven"},{justOne:true});
+
+# More data
+[{
+	first_name:"Jimmy",
+	last_name: "Doe",
+	gender: "male",
+	age: 33,
+	memberships: ["tennis", "football"],
+	address: {
+		street: "239 Huaykaew rd.",
+		city: "Chiang Mai",
+		coords: [44.12345,-77,7654]
+	},
+	friends:[
+		{ name:"Brad", relationships:"friend"},
+		{ name:"Susan", relationships:"son"}
+	],
+	balance: 125.2
+},
+{
+	first_name:"Anna",
+	last_name: "Doe",
+	gender: "female",
+	age: 43,
+	memberships: ["chess", "cooking"],
+	address: {
+		street: "239 Some street",
+		city: "Bangkok",
+		coords: [55.12345,-44,7654]
+	},
+	friends:[
+		{ name:"Tommy", relationships:"friend"},
+		{ name:"Neo", relationships:"father"}
+	],
+	balance: 100000.5
+}]
+
+# mlab - MongoDB as a service
+mongo ds036577.mlab.com:36577/lab1 -u <dbuser> -p <dbpassword>
+
+# export collection as a JSON file
+mongoexport -h ds036577.mlab.com:36577 -d lab1 -c customers -u [username] -o customers.json -p [password]
+
+Import collection
+mongoimport -h ds036577.mlab.com:36577 -d lab1 -c <collection> -u <user> -p <password> --file <input file>
+Export collection
+mongoexport -h ds036577.mlab.com:36577 -d lab1 -c <collection> -u <user> -p <password> -o <output file>

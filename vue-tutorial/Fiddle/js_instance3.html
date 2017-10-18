@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>P3-CSS#1</title>
+    <script src="https://unpkg.com/vue/dist/vue.js"></script>
+
+</head>
+
+<body>
+    <div id="app1">
+        <h1 ref="heading">{{ title }}</h1>
+        <button v-on:click="show" ref="myButton">Show Paragraph</button>
+        <p v-if="showParagraph">This is not always visible</p>
+    </div>
+
+    <div id="app2">
+        <h1>{{ title }}</h1>
+        <button @click="onChange">Change Title in VM1</button>
+    </div>
+
+    <script>
+        // define data properties outsite instance
+        // using normal javascript code
+        var data1 = {
+            title: 'The VueJS Instance',
+            showParagraph: false
+        }
+
+        var vm1 = new Vue({
+            el: '#app1',
+            data: data1,
+            methods: {
+                show: function () {
+                    this.showParagraph = true;
+                    this.updateTitle('The Update VueJS Instance');
+                    // using $refs attribute
+                    console.log(this.$refs);
+                    this.$refs.myButton.innerText = 'Test';
+
+                },
+                updateTitle: function (title) {
+                    this.title = title;
+                }
+            },
+            computed: {
+                lowercaseTitle: function () {
+                    return this.title.toLowerCase();
+                }
+            },
+            watch: {
+                title: function (value) {
+                    alert('Title changed, new value: ' + value);
+                }
+            }
+        });
+
+        // Check if strictly equal: $data
+        console.log(vm1.$data == data1);
+
+        // using $refs: replace {{ title }}
+        vm1.$refs.heading.innerText = "Changed by $refs";
+
+        var vm2 = new Vue({
+            el: '#app2',
+            data: {
+                title: 'The Second VueJS Instance',
+                showParagraph: false
+            },
+            methods: {
+                onChange: function () {
+                    // Access from VM2
+                    vm1.title = 'Title Changed by VM2';
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
