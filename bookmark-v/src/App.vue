@@ -16,7 +16,8 @@
             </div>
             <div class="form-group">
                 <label>Site URL</label>
-                <input type="text" class="form-control" placeholder="Website URL" v-model="bookmark.URL">
+                <input type="text" class="form-control" placeholder="Website URL" 
+                v-model="bookmark.URL" id="siteUrl">
             </div>
             <a class="btn btn-primary" @click="submit">Submit</a>
             </form>
@@ -70,6 +71,7 @@
                 .then(data => {                     // define what to do with the returned javascript object
                     const resultArray = [];
                     for (let key in data) {
+                        
                         resultArray.push(data[key]);
                     }
                     this.bookmarks = resultArray;         // trigger Vue.js to update the DOM
@@ -83,7 +85,8 @@
                     this.fetchData(); 
                 }, error => {               // define how to deal with error
                     console.log(error);
-                });                
+                });  
+
             }
         },
     created: function(){
