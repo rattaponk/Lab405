@@ -30,7 +30,7 @@
                             <p v-show="errors.has('facebook')" style="color: red;font-size:small;">{{ errors.first('facebook') }}</p>
                         </div>
                         <div class="control-group">
-                            <input name="birthdate" v-model="user.birthdate" type="text" placeholder="Birth date: DD/MM/YYYY" v-validate="'date_format:DD/MM/YYYY|date_between:' + mindate + ',' + maxdate " :class="{'input': true, 'is-danger': errors.has('user.birthdate') }">
+                            <input name="birthdate" v-model="user.birthdate" type="text" placeholder="Birth date: DD/MM/YYYY" v-validate="'date_format:DD/MM/YYYY'" :class="{'input': true, 'is-danger': errors.has('user.birthdate') }">
                             <p v-show="errors.has('birthdate')" style="color: red">{{ errors.first('birthdate') }}</p>
                         </div>
                         <div class="control-group">
@@ -61,7 +61,7 @@
     });
     var md5 = require('md5');
     let usersRef = db.ref('users');
-    let Nowdate = new Date()
+    let Nowdate = new Date();
     export default {
         name: 'signUpValidate',
         data() {
@@ -74,9 +74,7 @@
                     facebook: '',
                     phone: '',
                     birthdate: '',
-                },
-                mindate: Nowdate.getDate() + '/' + (Nowdate.getMonth() + 1) + '/' + (Nowdate.getFullYear() - 100),
-                maxdate: Nowdate.getDate() + '/' + (Nowdate.getMonth() + 1) + '/' + Nowdate.getFullYear(),
+                }
             }
         },
         methods: {

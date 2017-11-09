@@ -33,7 +33,7 @@
         </div>
         <!-- <button @click="logout">Logout</button> -->
         <footer class="footer">
-            <p>&copy; 2016 Bookmarker, Inc.</p>
+            <center><p>&copy; 2016 Bookmarker, Inc.</p></center>
         </footer>
     </div>
 </template>
